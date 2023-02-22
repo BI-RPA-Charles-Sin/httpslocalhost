@@ -7,11 +7,12 @@ const app = express();
 
 app.get("/", (req, res, next) => {
   if (req.socket.getPeerCertificate()) {
-    console.log("req.socket not empty");
+    console.log("req.socket is empty");
+    console.log(req.socket.getPeerCertificate());
   }
 
-  console.log("JSON.stringify(req.header): ");
-  console.log(JSON.stringify(req.header));
+  console.log("JSON.stringify(req.headers): ");
+  console.log(JSON.stringify(req.headers));
 
   res.status(200).send("Hello world!");
 });
