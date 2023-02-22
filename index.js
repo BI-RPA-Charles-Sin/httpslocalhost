@@ -40,7 +40,6 @@ servIo.on("connection", function (socket) {
   connectedUsers[user_id] = socket.id;
 
   setInterval(function () {
-    console.log({ socket });
     socket.emit("second", { second: new Date().getTime() });
   }, 1000);
 });
