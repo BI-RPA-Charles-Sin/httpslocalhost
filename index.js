@@ -53,13 +53,15 @@ app.use((req, res, next) => {
 });
 
 app.get("/", (req, res, next) => {
-  if (req.socket.getPeerCertificate()) {
-    console.log("req.socket is empty");
-    console.log(req.socket.getPeerCertificate());
-  }
+  // if (req.socket.getPeerCertificate()) {
+  //   console.log("req.socket is empty");
+  //   console.log(req.socket.getPeerCertificate());
+  // }
 
-  console.log("JSON.stringify(req.headers): ");
-  console.log(JSON.stringify(req.headers));
+  // console.log("JSON.stringify(req.headers): ");
+  // console.log(JSON.stringify(req.headers));
+
+  console.log(connectedUsers);
 
   // res.status(200).send("Hello world!");
   res.sendFile("./index.html", { root: __dirname });
