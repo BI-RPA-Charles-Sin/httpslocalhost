@@ -6,6 +6,12 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res, next) => {
+
+  console.log("JSON.stringify(req.header): ");
+  console.log(JSON.stringify(req.header));
+  console.log("JSON.stringify(req.socket): ");
+  console.log(JSON.stringify(req.socket));
+
   res.status(200).send("Hello world!");
 });
 
