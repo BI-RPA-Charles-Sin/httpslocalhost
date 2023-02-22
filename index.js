@@ -26,6 +26,8 @@ var servIo = io.listen(server, {
   forceBase64: true,
 });
 
+const connectedUsers = {};
+
 servIo.on("connection", function (socket) {
   //   let cert = socket.client.request.client.authorized.getPeerCertificate();
   let cert = socket.client.request.client.authorized;
@@ -33,10 +35,21 @@ servIo.on("connection", function (socket) {
   console.log(socket.handshake.auth);
   console.log({ cert });
 
+  const { user_id } = socket.handshake.query;
+
+  connectedUsers[user_id] = socket.id;
+
   setInterval(function () {
     console.log({ socket });
     socket.emit("second", { second: new Date().getTime() });
   }, 1000);
+});
+
+app.use((req, res, next) => {
+  req.io = io;
+  req.connectedUsers = connectedUsers;
+
+  return next();
 });
 
 app.get("/", (req, res, next) => {
