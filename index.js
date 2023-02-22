@@ -34,6 +34,7 @@ servIo.on("connection", function (socket) {
   console.log({ cert });
 
   setInterval(function () {
+    console.log(JSON.stringify(socket));
     socket.emit("second", { second: new Date().getTime() });
   }, 1000);
 });

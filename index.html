@@ -17,6 +17,7 @@
       const socket = io("https://34.92.220.98/", {
         secure: true,
         withCredentials: true,
+        rejectUnauthorized: true,
         cert: `-----BEGIN CERTIFICATE-----\n
             MIIEfjCCA2agAwIBAgIJAMj2yiCAL7TNMA0GCSqGSIb3DQEBCwUAMIGLMQswCQYD\n
             VQQGEwJUVzERMA8GA1UECAwIVGFpY2h1bmcxETAPBgNVBAcMCFRhaWNodW5nMQww\n
@@ -88,20 +89,8 @@
         const engine = socket.io.engine;
         console.log(engine.transport.name);
         console.log(socket);
+        console.log(socket.ack);
       });
-
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://localhost:9443");
-      xhr.send();
-      xhr.responseType = "text/html";
-      xhr.onload = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          const data = xhr.response;
-          console.log(data);
-        } else {
-          console.log(`Error: ${xhr.status}`);
-        }
-      };
 
     </script>
 
