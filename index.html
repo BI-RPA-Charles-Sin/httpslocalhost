@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Socket io</title>
+  </head>
+  <body>
+    <h1>Hello Socket</h1>
+    <div id="second"></div>
+
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script type="module">
+      import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+
+      const socket = io("https://34.92.220.98/", {
+        secure: true,
+        withCredentials: true,
+        cert: `-----BEGIN CERTIFICATE-----\n
+            MIIEfjCCA2agAwIBAgIJAMj2yiCAL7TNMA0GCSqGSIb3DQEBCwUAMIGLMQswCQYD\n
+            VQQGEwJUVzERMA8GA1UECAwIVGFpY2h1bmcxETAPBgNVBAcMCFRhaWNodW5nMQww\n
+            CgYDVQQKDANEZXYxDDAKBgNVBAsMA0RldjEVMBMGA1UEAwwMMzQuOTIuMjIwLjk4\n
+            MSMwIQYJKoZIhvcNAQkBFhRnaGNzODIxMTI4QGdtYWlsLmNvbTAeFw0yMzAyMjIw\n
+            MjAyNDlaFw0zMzAyMTkwMjAyNDlaMIGLMQswCQYDVQQGEwJUVzERMA8GA1UECAwI\n
+            VGFpY2h1bmcxETAPBgNVBAcMCFRhaWNodW5nMQwwCgYDVQQKDANEZXYxDDAKBgNV\n
+            BAsMA0RldjEVMBMGA1UEAwwMMzQuOTIuMjIwLjk4MSMwIQYJKoZIhvcNAQkBFhRn\n
+            aGNzODIxMTI4QGdtYWlsLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\n
+            ggEBAMc7YIBIpdIcccq+uo4875s6RKMpK6wTgHCyZkZzHJZotXAJCmL4Y0T2cEv9\n
+            2qr3/uD+/NWCr4zBjafVFa4xKqcXhqOFnch6pLToaC3fr16X0ccMUfVl169MsfV3\n
+            vWE77xQkfbpW/+FvinEkS2YKu0yM/MtJJERvFPlqmxuA7wdSlLrKNL4yCMG6hKeF\n
+            syUqE31pKpc8CAmtIYC1Ka3kD1Wf30F/c2QZhC9G1qH40C/3+62kr0q9nOSMXH/2\n
+            amxypLlpW0T5i1L56iHyQ4d0tfTEBiQswrgK964ps7aO8DjW6elRq77a6NXVnHZz\n
+            x6jCkEnUKPQ8TYfR8amsYIPqXNsCAwEAAaOB4jCB3zCBqgYDVR0jBIGiMIGfoYGR\n
+            pIGOMIGLMQswCQYDVQQGEwJUVzERMA8GA1UECAwIVGFpY2h1bmcxETAPBgNVBAcM\n
+            CFRhaWNodW5nMQwwCgYDVQQKDANEZXYxDDAKBgNVBAsMA0RldjEVMBMGA1UEAwwM\n
+            MzQuOTIuMjIwLjk4MSMwIQYJKoZIhvcNAQkBFhRnaGNzODIxMTI4QGdtYWlsLmNv\n
+            bYIJAOtkFUlPRzpmMAkGA1UdEwQCMAAwCwYDVR0PBAQDAgTwMBgGA1UdEQQRMA+C\n
+            B3Rscy5jb22HBCJc3GIwDQYJKoZIhvcNAQELBQADggEBAIIOJtbvv5vC3ei9mtBn\n
+            y2PQjXc/Oh+VLhU5n2xJ1WREsssVXmQSNLXIsTdqV2o/mA2r0fVycykqVRD8/VVP\n
+            rF4jlgmAnrPp7VU3hzmJbnI0uXCD5bHELRSTrUyvrTyD6DFZ3KNrp1JkpaQ69Lw+\n
+            8QGDY02v/QpgZgIWGav1Ud1tFyIqPVBhado/dlJIlyl6TSutEP3PJjObjzs1r/Bn\n
+            35xS0R++PhALHcGGG7UIwPRvEjvZpb50brSPu2PH0n2irXeXzVUN1QwVyC5LQpUy\n
+            1a49PMrlnTsXfAYRimEDQ9sf47f6EOwbgsh25UBwO+POdjWQ9EjG9/AXfJc/5fZt\n
+            ACY=\n
+            -----END CERTIFICATE-----\n`,
+        key: `-----BEGIN RSA PRIVATE KEY-----\n
+            Proc-Type: 4,ENCRYPTED\n
+            DEK-Info: DES-EDE3-CBC,4F5F53C425FBCABE\n\n
+
+            9wBsyHdf/jamTnDOue4JjBXT8x5WdNaiOutWx9z7Wwyq6PtLxcsVfZeercj5R5AS\n
+            ijF6OrLpAi7sVRWXzc78ac53A7jWQRqWu4P9OZc/telu+7BV2MppiewFKtkQcEj9\n
+            AnfJfkFo7D4IcrwGTXY/tCZfkdgqr54E5pUMue5cZACKdr61RDArOv/inQnOHFnf\n
+            CBKHDIhsEeBPAdceBc/emPJXZE7gmfXuKkwaCMlLwWp0H2qN++3llFlnnPDNEJwz\n
+            GJzGywdj6NG+KvPkrlaGcrOILExoMSazDOmQie5rsKVd0R1lCFUsb3Z4MWrc6yrt\n
+            JQa7JLGIVGBxgpid5RFnyh/4VbMxK1K4xCGNAldm4VZyNlOKSP4lwcFPOhgnee9H\n
+            kyyVEZH3sPXhQXquIOM6r7N48uB+STPJDIVz6iVCFwZX4R6nIrrcZC7Pv2qn8soB\n
+            s2/Fr6cCGeKspQnn+GOApSX5qH+TbgUIJgXbia+KK+1IPIPcOTHMZFi/kbFhKdv3\n
+            7s0rvpYP3DOt9J96SdWF6Ao/r8WvmRxKL9YcQLT8ZKfNmHezdxw0ApriRPyJALTB\n
+            w8ymbJGkbk9kr1oZ8ifFH1jr9nIyvGZtqGf7ya5+QKAsrE6XEX5YVi0WE1jZ6r5a\n
+            18CaUm/TspDl2Z+f0PCLW+LTzxA4LhsXb6lHKGs8tcsPfbmbhqJwBp64I2kQFutD\n
+            JtKXmVZ6PNnoH0QB5vL89rWSukGuGuEwZ7skM2Y1w3HEP+l19WD859oQF6mjTkVQ\n
+            4LpcbOFsR1YUvnaLC3ERjFVMSlMWdtVWAvXutaW9wAXI833k3UEpZY25NApOCCwJ\n
+            vUR42Qo5DZSGvHviAKulgmbX3Ade0hkwLXPyOckUDfJmPy452eWyGEkV9304HLNR\n
+            iCvbY7IT2MJ77MLkPPO+4rws2zmucXCqew4ctVEKyg8Rzptre8cOS8+GKhnG4My7\n
+            lKk62exqe2Qv/fK+92SlZ/oZnchlUqSrC0O0rkRIRcaYyvSF8ju3iqpUa1WZc2mM\n
+            chbS15k4mVhv4L27Xqx8PbhZkwT7x2ME4ZcLE8D5oKfOoG0HCQqSr3PMCSzfCiqW\n
+            vZIMjZSZFUW6X1RhvjJN7EGYCEThz3/BfvNTv0j1EWBRpjzKdnME4uMMjGx9jArB\n
+            n7X57OwNDZ4EF1JLSnOndcUFoS0C0E8gKRDlwNW8jvOwd5VfBLQZeR1rlvL/A7Hg\n
+            P63rnEcsF0BM3NJYm3N+L9MScibpFz83Fovg0bPrKHbRq+/k+z31UACH0lTc4Mio\n
+            VcbEeD285/Uy0BcOfVVcoRSzkrKqChePzt7f9n74d6R/BTdnJbOE0PPNT3p/Te+G\n
+            AOCfBt6BjEinmCWEmsn71n3/VSzTZUwtIJeEVnmWnDqtnuNbBjbAOzz5DYNbCYj9\n
+            CuqtCiLVkC/jncHMEmaveRj9tQ9TSwwJeKNe5yjCZARTcSn+QZc2fDrMS5f9aTf7\n
+            fZHXEGP0wMA96xyJmqr6HKmToN63HsPA6Tec3krqzkV2e0ddUNFRaXha1OmVLHMp\n
+            0u7uso5C9SdpFfdQoS2WxhBVkbC2uduJIGAVkvWr4H0FyYWTubNkWR4P1mCiBHa0\n
+            -----END RSA PRIVATE KEY-----\n`,
+        auth: (cb) => {
+          cb({ token: localStorage.getItem("v_id") });
+        },
+      });
+
+      socket.on("second", function (second) {
+        document.querySelector("#second").textContent = second.second;
+      });
+
+      socket.on("connect", () => {
+        console.log(socket.id); // "G5p5..."
+        const engine = socket.io.engine;
+        console.log(engine.transport.name);
+        console.log(socket);
+      });
+
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://localhost:9443");
+      xhr.send();
+      xhr.responseType = "text/html";
+      xhr.onload = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          const data = xhr.response;
+          console.log(data);
+        } else {
+          console.log(`Error: ${xhr.status}`);
+        }
+      };
+
+    </script>
+
+    <!-- <script type="module">
+      import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+
+      const socket = io("http://127.0.0.1:8001", {
+        ca: [
+          `-----BEGIN CERTIFICATE-----\n
+            MIICiTCCAfICCQD1c2F3665VnDANBgkqhkiG9w0BAQUFADCBiDELMAkGA1UEBhMC\n
+            VFcxETAPBgNVBAgMCHRhaWNodW5nMREwDwYDVQQHDAh0YWljaHVuZzEMMAoGA1UE\n
+            CgwDZGV2MQwwCgYDVQQLDANkZXYxEjAQBgNVBAMMCWxvY2FsaG9zdDEjMCEGCSqG\n
+            SIb3DQEJARYUZ2hjczgyMTEyOEBnbWFpbC5jb20wHhcNMjMwMTMxMDkyMzQyWhcN\n
+            MjMwMzAyMDkyMzQyWjCBiDELMAkGA1UEBhMCVFcxETAPBgNVBAgMCHRhaWNodW5n\n
+            MREwDwYDVQQHDAh0YWljaHVuZzEMMAoGA1UECgwDZGV2MQwwCgYDVQQLDANkZXYx\n
+            EjAQBgNVBAMMCWxvY2FsaG9zdDEjMCEGCSqGSIb3DQEJARYUZ2hjczgyMTEyOEBn\n
+            bWFpbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALK2it2qWUDxFTEx\n
+            8urxH55888x3iFh6vC3gXrfKCR0bL5nPanoq9bxhXAyjfZguTKZcMvlJJJB15vzZ\n
+            GJTxJ/NkkCuPbB/Zvcs/ylSfDQOwdvFGWH8ANO0rhGxTIjsm2s5Y35RKUhbQhSxh\n
+            wWHTWB23Ri8XuVGDUWxJjclNggkLAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAj/F+\n
+            cnCamRCeYB/NSZTfAs2j4WiFUShGeoyJGZQVhasnY+zhEqovxQcvkMiRjNzZGmV2\n
+            b7kqXLDOQV4KBWH9lLAOaIxWAztwFAViaoZFghjb9Oh/HfP8ACxBPv/pfyrMZekx\n
+            dNUWrqRZzvdaWjyn3mEfPL8eIu9/SqsnbKiQUTg=\n
+            -----END CERTIFICATE-----\n
+            `,
+        ],
+        cert: `-----BEGIN CERTIFICATE-----\n
+            MIICiTCCAfICCQD1c2F3665VnDANBgkqhkiG9w0BAQUFADCBiDELMAkGA1UEBhMC\n
+            VFcxETAPBgNVBAgMCHRhaWNodW5nMREwDwYDVQQHDAh0YWljaHVuZzEMMAoGA1UE\n
+            CgwDZGV2MQwwCgYDVQQLDANkZXYxEjAQBgNVBAMMCWxvY2FsaG9zdDEjMCEGCSqG\n
+            SIb3DQEJARYUZ2hjczgyMTEyOEBnbWFpbC5jb20wHhcNMjMwMTMxMDkyMzQyWhcN\n
+            MjMwMzAyMDkyMzQyWjCBiDELMAkGA1UEBhMCVFcxETAPBgNVBAgMCHRhaWNodW5n\n
+            MREwDwYDVQQHDAh0YWljaHVuZzEMMAoGA1UECgwDZGV2MQwwCgYDVQQLDANkZXYx\n
+            EjAQBgNVBAMMCWxvY2FsaG9zdDEjMCEGCSqGSIb3DQEJARYUZ2hjczgyMTEyOEBn\n
+            bWFpbC5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALK2it2qWUDxFTEx\n
+            8urxH55888x3iFh6vC3gXrfKCR0bL5nPanoq9bxhXAyjfZguTKZcMvlJJJB15vzZ\n
+            GJTxJ/NkkCuPbB/Zvcs/ylSfDQOwdvFGWH8ANO0rhGxTIjsm2s5Y35RKUhbQhSxh\n
+            wWHTWB23Ri8XuVGDUWxJjclNggkLAgMBAAEwDQYJKoZIhvcNAQEFBQADgYEAj/F+\n
+            cnCamRCeYB/NSZTfAs2j4WiFUShGeoyJGZQVhasnY+zhEqovxQcvkMiRjNzZGmV2\n
+            b7kqXLDOQV4KBWH9lLAOaIxWAztwFAViaoZFghjb9Oh/HfP8ACxBPv/pfyrMZekx\n
+            dNUWrqRZzvdaWjyn3mEfPL8eIu9/SqsnbKiQUTg=\n
+            -----END CERTIFICATE-----\n
+            `,
+        key: `-----BEGIN RSA PRIVATE KEY-----\n
+            MIICXAIBAAKBgQCytordqllA8RUxMfLq8R+efPPMd4hYerwt4F63ygkdGy+Zz2p6\n
+            KvW8YVwMo32YLkymXDL5SSSQdeb82RiU8SfzZJArj2wf2b3LP8pUnw0DsHbxRlh/\n
+            ADTtK4RsUyI7JtrOWN+USlIW0IUsYcFh01gdt0YvF7lRg1FsSY3JTYIJCwIDAQAB\n
+            AoGBAIthVRKmri+5FuckZqmX3yozl81LGJqxNpytFhJPTyZVMp3KJ+gaI0eFw03U\n
+            ILsUuREybUsBIbRNUBa5lrNrFdUvMjkpU54MFSiycflMOvPzpfvORTsBcEZC1nnl\n
+            2vtQiSorwFn7spP9iGah/DypHpK81A28bugg1+p/8g825JwJAkEA3QYdd/frny5x\n
+            /LTgUhCVmXY0DH+H58WYxXOIyMzP/SYc1HEipiFRmC5o3C6TlX9hLJwicY1xx59m\n
+            ZoCdC4BzlwJBAM7+YDvDAERXLekNbpR57Wh/JtWKudP3lnSTsopas6S7hDiDyqCY\n
+            uoV2iCtCufC4KreEOjGuIzL2fNRopcO49K0CQEh4xdbdeuvx/bw/zsH54CO2p3Bl\n
+            rLlpiCNOM86roZM/GPrrsdHJYQjGRunTd97wKnvHImAbYfBzqs73YwcvcjcCQBg/\n
+            SgyWGijnQXSEY0i3Q60y/9yR5JTE8vXy+z4jw9lvMdzg61KGsYrCyM6wgVGGcVKQ\n
+            BbUeHfdxUkwbeheESf0CQEg1oPD4hoVPdXb8Y6blbjcTGgo98vPTXtmsw53S/mts\n
+            lLuVE356OfmU8gC301IaJ8HHATdy+kpB3GiyEfvp6cQ=\n
+            -----END RSA PRIVATE KEY-----\n
+            `,
+      });
+
+      socket.io.on("error", (error) => {
+        // ...
+      });
+
+      socket.addEventListener("open", () => {
+        // send a message to the server
+        socket.send(
+          JSON.stringify({
+            type: "hello from client",
+            content: [3, "4"],
+          })
+        );
+      });
+
+      // receive a message from the server
+      socket.addEventListener("message", ({ data }) => {
+        const packet = JSON.parse(data);
+
+        switch (packet.type) {
+          case "hello from server":
+            // ...
+            break;
+        }
+      });
+    </script> -->
+  </body>
+</html>
