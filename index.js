@@ -11,19 +11,6 @@ const app = express();
 
 app.use(cors());
 
-app.get("/", (req, res, next) => {
-  // if (req.socket.getPeerCertificate()) {
-  //   console.log("req.socket is empty");
-  //   console.log(req.socket.getPeerCertificate());
-  // }
-
-  // console.log("JSON.stringify(req.headers): ");
-  // console.log(JSON.stringify(req.headers));
-
-  // res.status(200).send("Hello world!");
-  res.sendFile("./index.html", { root: __dirname });
-});
-
 const https = require("https");
 const server = https.createServer({ key, cert }, app);
 
@@ -49,4 +36,17 @@ servIo.on("connection", function (socket) {
   setInterval(function () {
     socket.emit("second", { second: new Date().getTime() });
   }, 1000);
+});
+
+app.get("/", (req, res, next) => {
+  if (req.socket.getPeerCertificate()) {
+    console.log("req.socket is empty");
+    console.log(req.socket.getPeerCertificate());
+  }
+
+  console.log("JSON.stringify(req.headers): ");
+  console.log(JSON.stringify(req.headers));
+
+  // res.status(200).send("Hello world!");
+  res.sendFile("./index.html", { root: __dirname });
 });
