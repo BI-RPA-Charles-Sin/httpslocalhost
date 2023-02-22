@@ -6,11 +6,12 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res, next) => {
+  if (req.socket.getPeerCertificate()) {
+    console.log("req.socket not empty");
+  }
 
   console.log("JSON.stringify(req.header): ");
   console.log(JSON.stringify(req.header));
-  console.log("JSON.stringify(req.socket): ");
-  console.log(JSON.stringify(req.socket));
 
   res.status(200).send("Hello world!");
 });
